@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>2 oz élixir</title>
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="stylesheet" href="css/reveal.min.css">
+  <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+  <!-- For syntax highlighting -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/monokai_sublime.min.css">
+  <style>
+    .reveal h1.main-title { padding: 0.5em 0; border: 1px solid white; border-width: 1px 0;}
+    .reveal .state-background { background: rgba(0,0,0,0.4); }
+    .reveal .pause-overlay { background:url('http://elixir-lang.org/images/logo/logo.png') white no-repeat fixed center;}
+    .reveal pre { box-shadow: none; }
+    .reveal code { background:none; font-size:1.5em; line-height:1.3; }
+    .reveal code.small { background:none; font-size:1.3em; line-height:1.4; }
+    .reveal blockquote { color: rgba(255, 255, 255, 0.8); background:none; box-shadow:none; padding:0.5em 0; border-color:white; border-style:solid; border-width:1px 0;}
+    .reveal blockquote .emph { color: white; font-size: 1.6em;}
+    .reveal p.blockquote-reference { width:70%; margin:0.5em auto; text-align:right; font-style: italic; color: rgba(255,255,255,0.5); font-size: 0.6em; }
+    .reveal p.blockquote-reference:before { content: '— ' }
+    .reveal section img { background:none; box-shadow:none; border:none; }
+  </style>
+
+  <style>
+    header.photo-credits { position: absolute; bottom: 5px; left: 5px; z-index: 999; font: 0.35em helvetica; color: rgba(255,255,255,0.5); }
+
+    .credits-1 .photo-credits:after { content: 'Message in a bottle by Peter Thoeny - Quality HDR Photography, on Flickr, licenced under CC BY-NC-SA 2.0'; }
+    .credits-2 .photo-credits:after { content: 'Morning Light: Good for Bottles, Bad for Windows by judy_and_ed, on Flickr, licenced under CC BY-NC 2.0'; }
+    .credits-resources .photo-credits:after { content: 'Svuotiamo il frigobar e scappiamo, dai. by Francesca Guadagnini, on Flickr, licenced under CC BY-NC-SA 2.0'; }
+    .credits-last .photo-credits:after { content: 'Kinaflex camera by La Belle Lumière, on Flickr, licenced under CC BY-NC-ND 2.0'; }
+
+    .reveal a:not(.image) { color: white; font: 0.5em helvetica; text-decoration:underline; }
+  </style>
+
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = 'css/print/pdf.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+  </script>
+
+
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="reveal">
+    <header class="photo-credits"></header>
+    <div class="slides">
+
+      <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
+        <h1 class="main-title">2 oz. élixir</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>pourquoi élixir?</h2>
+        <table>
+          <tr>
+            <td>
+              <ul>
+                <li class="fragment">programmation fonctionnelle</li>
+                <li class="fragment">concurrence transparente</li>
+                <li class="fragment">métaprogrammation</li>
+                <li class="fragment">typage dynamique et structurel</li>
+                <li class="fragment">polymorphisme</li>
+                <li class="fragment">comprehensions</li>
+              </ul>
+            </td>
+            <td>
+              <ul>
+                <li class="fragment">tail-call optimization</li>
+                <li class="fragment">immuabilité</li>
+                <li class="fragment">pattern matching</li>
+                <li class="fragment">services distribués et asynchrones</li>
+                <li class="fragment">plateforme robuste (OTP)</li>
+                <li class="fragment">surveillance de processus</li>
+                <li class="fragment">etc&hellip;</li>
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </section>
+
+      <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
+        <h1 class="main-title">Pattern matching</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Fibonacci (1)</h2>
+        <pre>
+          <code class="ruby" data-trim>
+defmodule Fibonacci do
+  def of(0), do: 0
+  def of(1), do: 1
+  def of(n), do: of(n-2) + of(n-1)
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Fibonacci (2)</h2>
+        <pre>
+          <code class="ruby" data-trim>
+defmodule Fibonacci do
+  def of(n) when n < 2, do: n
+  def of(n), do: of(n-2) + of(n-1)
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Fibonacci (3)</h2>
+        <pre>
+          <code class="ruby" data-trim>
+defmodule Fibonacci do
+  def of(n), do: fib_of(n, 0, 1)
+
+  defp fib_of(0, curr_fib, _), do: curr_fib
+  defp fib_of(limit, curr_fib, next_fib) do 
+    fib_of(limit-1, next_fib, curr_fib + next_fib)
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Factoriel d'un nombre</h2>
+        <pre>
+          <code class="ruby" data-trim>
+defmodule Factorial do
+  def of(n), do: facto_of(n, 1)
+
+  defp facto_of(0, acc), do: acc
+  defp facto_of(1, acc), do: acc
+  defp facto_of(n, acc), do: facto_of(n-1, acc*n)
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Somme des éléments d'une liste</h2>
+        <pre>
+          <code class="ruby" data-trim>
+defmodule Sum do
+  def of(list), do: sum_of(list, 0)
+
+  defp sum_of([], acc), do: acc
+  defp sum_of([x|xs], acc), do: sum_of(xs, x+acc)
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
+        <h1 class="main-title">Fonctions anonymes</h1>
+      </section>
+      <section data-background="#6e4a7e">
+        <h3>javascript</h3>
+        <pre>
+          <code class="javascript" data-trim>
+var squared = function(x){return Math.pow(x, 2);};
+squared(4); //=> 16
+          </code>
+        </pre>
+        <h3>elixir</h3>
+        <pre>
+          <code class="elixir" data-trim>
+squared = fn x -> :math.pow(x, 2) end
+squared.(4) #=> 16.0
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h3>javascript</h3>
+        <pre>
+          <code class="javascript" data-trim>
+var squared = _.partial(Math.pow, _, 2);
+squared(4); //=> 16
+          </code>
+        </pre>
+        <h3>elixir</h3>
+        <pre>
+          <code class="elixir" data-trim>
+squared = &:math.pow(&1, 2)
+squared.(4) #=> 16.0
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h3>javascript</h3>
+        <pre>
+          <code class="javascript" data-trim>
+var pow = Math.pow;
+pow(4, 2); //=> 16
+          </code>
+        </pre>
+        <h3>elixir</h3>
+        <pre>
+          <code class="elixir" data-trim>
+pow = &:math.pow/2
+pow.(4, 2) #=> 16.0
+          </code>
+        </pre>
+      </section>
+
+
+      <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
+        <h1 class="main-title">pipeline</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Nombres &lsquo;heureux&rsquo;</h2>
+        <p>
+        $$
+        19 \rightarrow 1^2 + 9^2 = 82 \\
+        82 \rightarrow 8^2 + 2^2 = 68 \\
+        68 \rightarrow 6^2 + 8^2 = 100 \\
+        100 \rightarrow 1^2 + 0^2 + 0^2 = 1 \\
+        $$
+        </p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+defmodule Happy do
+  def is_happy(n) do
+    do_is_happy(n, [])
+  end
+
+  defp do_is_happy(1, _), do: true
+  defp do_is_happy(n, past), do: ???
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="small elixir" data-trim>
+defp do_is_happy(n, past) do
+  if n in past do
+    false
+  else
+    n
+    |> digits
+    |> Enum.reduce(0, &sum_of_squares/2)
+    |> do_is_happy([n|past])
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+defp digits(num) do
+  num
+  |> to_string
+  |> String.split("", trim: true)
+  |> Enum.map(&Integer.parse/1)
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+defp sum_of_squares({digit, _}, acc) do
+  (:math.pow(digit, 2) |> trunc) + acc
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
+        <h1 class="main-title">comprehensions</h1>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+iex> for x <- 1..5, y <- 1..5, x < y, do: {x,y}
+
+[{1, 2}, {1, 3}, {1, 4}, {1, 5}, {2, 3},
+ {2, 4}, {2, 5}, {3, 4}, {3, 5}, {4, 5}]
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Nombres premiers</h2>
+        <pre>
+          <code class="small elixir" data-trim>
+defmodule PrimeNumbers do
+  def upto(n) do
+    sieve = :math.sqrt(n) |> trunc
+
+    non_primes = (for i <- 2..sieve do
+      multiples_of(i, i*i, n, [])
+    end) |> List.flatten
+
+    for i <- 1..n, !(i in non_primes), do: i
+  end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">deuxième dose</h1>
+        <h2>Programmation distribuée</h2>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Programmation distribuée</h2>
+        <ul>
+          <li class="fragment">Acteurs</li>
+          <li class="fragment">GenServers</li>
+          <li class="fragment">GenEvents</li>
+          <li class="fragment">Tasks</li>
+          <li class="fragment">Agents</li>
+          <li class="fragment">Supervisors</li>
+          <li class="fragment">Nodes</li>
+        </ul>
+      </section>
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">Acteurs</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;An actor is an <span class="emph">independent</span> process that <span class="emph">shares nothing</span> with any other process.<br><br>You can <span class="emph">spawn</span> new processes, <span class="emph">send</span> them messages, and <span class="emph">receive</span> messages back.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>un acteur primitif</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule Greeter do
+  def start do
+    receive do
+      {sender, {:greet, name}} ->
+        send sender, {:ok, "Hello, #{name}!"}
+        start
+    end
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Appeler un acteur</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+pid = spawn(Greeter, :start, [])
+send pid, {self, {:greet, "World"}}
+
+receive do
+  {:ok, greetings} ->
+    IO.puts greetings #=> "Hello, World!"
+  after 5000 ->
+    IO.puts "timed out"
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">GenServer</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;A GenServer is a process that can be used to <span class="emph">keep state</span>, execute code <span class="emph">asynchronously</span> and so on.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Elixir documentation</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;The advantage of using a generic server process is that it will include functionality for tracing and <span class="emph">error reporting</span> and will also fit into a <span class="emph">supervision tree</span>.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Elixir documentation</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>un genserver</h2>
+        <pre>
+          <code class="small elixir" data-trim="">
+defmodule Greeter do
+  use GenServer
+
+  def init(greeting) do
+    {:ok, %{greeting: greeting}}
+  end
+  def handle_call({:greet, name}, _sender, state) do
+    {:reply, "#{state.greeting}, #{name}!", state}
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>appeler un genserver</h2>
+        <pre>
+          <code class="small elixir" data-trim="">
+{:ok, pid} = GenServer.start_link(Greeter, "Hello")
+GenServer.call(pid, {:greet, "World"}) #=> "Hello, World!"
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>API client</h2>
+        <pre>
+          <code class="small elixir" data-trim="">
+defmodule Greeter do
+  use GenServer
+  # client api...
+  def start_link(greeting) do
+    GenServer.start_link(__MODULE__, greeting)
+  end
+  def greet(pid, name) do
+    GenServer.call(pid, {:greet, name})
+  end
+  # server implementation...
+          </code>
+        </pre>
+      </section>
+
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">GenEvents</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;Un GenEvent <span class="emph">handler</span> est un processus qui souscrit à des <span class="emph">événements</span> émis par un GenEvent <span class="emph">manager</span>.&rdquo;
+        </blockquote>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>event handler</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule SearchIndexer do
+  use GenEvent
+
+  def handle_event({:new_entry, entry}, state) do
+    # actually do indexing...
+    {:ok, state}
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Event Manager</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+{:ok, pid} = GenEvent.start_link
+GenEvent.add_handler(pid, SearchIndexer, [])
+
+GenEvent.notify(pid, {:new_entry, %{id: 1}})
+# GenEvent.ack_notify...
+# GenEvent.sync_notify...
+          </code>
+        </pre>
+      </section>
+
+
+
+
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">Tasks</h1>
+      </section>
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;An elixir task is a <span class="emph">function</span> that runs in the <span class="emph">background</span>.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>déclencher une tâche</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+worker = Task.async(Mod, :expensive_call, [])
+# do other things...
+result = Task.await(worker)
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>10,000 tâches parallèles</h2>
+        <pre>
+          <code class="small elixir" data-trim="">
+(for i <- 1..10_000, into: [], do: i)
+|> Enum.map(&Task.async(Mod, :expensive_call, [&1]))
+|> Enum.map(&Task.await/1)
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">Agents</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;An agent is a <span class="emph">background</span> process that maintains <span class="emph">state</span>.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Say it</h2>
+        <pre>
+          <code class="elixir" data-trim>
+Say.it("Bonjour")
+|> Say.it("le")
+|> Say.it("monde!")
+|> Say.it()
+
+"Bonjour le monde!"
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+def it(term) when is_binary(term) do
+  start_link |> it(term)
+end
+
+defp start_link do
+  {:ok, agent_pid} = Agent.start_link fn -> [] end
+  agent_pid
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim>
+def it(agent_pid, word) do
+  Agent.update(agent_pid, &([word|&1]))
+  agent_pid
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim="">
+def it(term) when is_pid(term) do
+  sentence = Agent.get(term, &(&1))
+             |> Enum.reverse
+             |> Enum.join(" ")
+  Agent.stop(term)
+  sentence
+end
+          </code>
+        </pre>
+      </section>
+
+
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">Supervisors</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;A supervisor is a process that is given a <span class="emph">list</span> of processes to <span class="emph">monitor</span> and is told what to do if a process <span class="emph">dies</span>, and how to prevent restart loops.&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;Supervisors are the heart of <span class="emph">reliability</span>&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>superviseur nommé</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule GreeterSupervisor do
+  use Supervisor
+
+  def start_link do
+    Supervisor.start_link(
+      __MODULE__, [], name: __MODULE__)
+  end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Ajout de processus à superviser</h2>
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule GreeterSupervisor do
+  use Supervisor
+  # def start_link...
+
+  def init(_args) do
+    children = [ worker(Greeter, ["Hello"]) ]
+    supervise(children, strategy: :one_for_one)
+  end
+end
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <table>
+          <thead>
+            <tr>
+              <th>Stratégie</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><pre>:one_for_one</pre></td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, le redémarrer.</td>
+            </tr>
+            <tr>
+              <td><pre>:one_for_all</pre></td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, les redémarrer tous.</td>
+            </tr>
+            <tr>
+              <td><pre>:rest_for_all</pre></td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, le redémarrer lui, et tous les autres qui suivent.</td>
+            </tr>
+            <tr>
+              <td><pre>:simple_one_for_one</pre></td>
+              <td style="font-size:0.6em">Comme :one_for_one mais spécifiquement pour l'ajout dynamique d'enfants.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      
+
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">Nodes</h1>
+      </section>
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;Nodes are the basis of <span class="emph">distribution</span>&rdquo;
+        </blockquote>
+        <p class="blockquote-reference">Programming Elixir</p>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Démarré dans le 1er node...</h2>
+        <pre>
+          <code class="bash" data-trim="">
+$ iex --sname one greeter.exs
+          </code>
+          <code class="elixir" data-trim="">
+iex(one@myhost)1> GenServer.start_link(
+...(one@myhost)1>   Greeter,
+...(one@myhost)1>   "Hello",
+...(one@myhost)1>   name: {:global, :greeter})
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>...Appelé du 2d.</h2>
+        <pre>
+          <code class="bash" data-trim="">
+$ iex --sname two
+          </code>
+          <code class="elixir" data-trim="">
+iex(two@myhost)1> Node.connect :"one@myhost"
+true
+iex(two@myhost)2> Node.list
+[:one@myhost]
+iex(two@myhost)3> GenServer.call(
+...(two@myhost)3>   {:global, :greeter},
+...(two@myhost)3>   {:greet, "World"})
+"Hello, World!"
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>Démarré dans le 2d, à partir du 1er...</h2>
+        <pre>
+          <code class="bash" data-trim="">
+$ iex --sname one
+          </code>
+          <code class="elixir" data-trim="">
+iex(one@myhost)1> Node.connect(:"two@myhost")
+iex(one@myhost)2> Node.spaw(:"two@myhost",
+...(one@myhost)2>   GenServer, :start_link,
+...(one@myhost)2>   [Greeter, "Hello",
+...(one@myhost)2>     [name: :hello]])
+          </code>
+        </pre>
+      </section>
+      <section data-background="#6e4a7e">
+        <h2>...Appelé localement dans le 2d.</h2>
+        <pre>
+          <code class="bash" data-trim="">
+$ iex --sname two greeter.exs
+          </code>
+          <code class="elixir" data-trim="">
+iex(two@myhost)1> GenServer.call(:hello,
+...(two@myhost)1>   {:greet, "World"})
+"Hello, World!"
+          </code>
+        </pre>
+      </section>
+
+
+
+
+      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
+        <h1 class="main-title">troisième dose</h1>
+        <h2>Métaprogrammation ✪ Polymorphisme</h2>
+      </section>
+
+      <section data-background="lib/img/3377551632_62a7b16839_o.jpg", data-state="credits-resources">
+        <h2>Ressources</h2>
+        <ul style="list-style:none; margin:0; text-align:center">
+          <li><a href="https://pragprog.com/book/elixir/programming-elixir">Programming Elixir</a></li>
+          <li><a href="http://elixir-lang.org/getting_started/1.html">Elixir &ldquo;Getting Started&rdquo; guide</a></li>
+          <li><a href="http://elixir-lang.org/docs/stable/elixir/">Elixir official documentation</a></li>
+          <li><a href="http://learnyousomeerlang.com/content">Learn you some Erlang, for great good!</a></li>
+        </ul>
+      </section>
+
+      <section data-background="lib/img/3267842231_9bc6fceea5_o.jpg" data-state="credits-last">
+        <h2>Photos</h2>
+        <ul style="list-style:none; margin:0; text-align:center">
+          <li><a href="https://flic.kr/p/o5ijLF">Message in a bottle by Peter Thoeny - Quality HDR Photography, on Flickr, licenced under CC BY-NC-SA 2.0</a><br></li>
+          <li><a href="https://flic.kr/p/caVFY9">Morning Light: Good for Bottles, Bad for Windows by judy_and_ed, on Flickr, licenced under CC BY-NC 2.0</a><br></li>
+          <li><a href="https://flic.kr/p/5YLxDr">Kinaflex camera by La Belle Lumière, on Flickr, licenced under CC BY-NC-ND 2.0</a><br></li>
+          <li><a href="https://flic.kr/p/69sQqQ">Svuotiamo il frigobar e scappiamo, dai. by Francesca Guadagnini, on Flickr, licenced under CC BY-NC-ND 2.0</a></li>
+        </ul>
+      </section>
+
+    </div>
+
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.min.js"></script>
+  <script>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      controls: false,
+      progress: true,
+      history: true,
+      center: true,
+
+      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+      transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+      // Parallax scrolling
+      // parallaxBackgroundImage: 'https://farm4.staticflickr.com/3926/14488494927_fd15424b07_k.jpg',
+      // parallaxBackgroundSize: '2048px 1361px',
+      parallaxBackgroundImage: '',
+      parallaxBackgroundSize: '',
+
+      math: {
+        mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+        config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+      },
+
+      // Optional libraries used to extend on reveal.js
+      dependencies: [
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/elixir.min.js', async: true },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/coffeescript.min.js', async: true },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/bash.min.js', async: true },
+        { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'plugin/math/math.js', async: true }
+      ]
+    });
+  </script>
+
+</body>
+</html>
