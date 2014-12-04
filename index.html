@@ -709,7 +709,7 @@ $ iex --sname one
           </code>
           <code class="elixir" data-trim="">
 iex(one@myhost)1> Node.connect(:"two@myhost")
-iex(one@myhost)2> Node.spaw(:"two@myhost",
+iex(one@myhost)2> Node.spawn(:"two@myhost",
 ...(one@myhost)2>   GenServer, :start_link,
 ...(one@myhost)2>   [Greeter, "Hello",
 ...(one@myhost)2>     [name: :hello]])
