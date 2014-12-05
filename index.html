@@ -34,6 +34,7 @@
 
     .credits-1 .photo-credits:after { content: 'Message in a bottle by Peter Thoeny - Quality HDR Photography, on Flickr, licenced under CC BY-NC-SA 2.0'; }
     .credits-2 .photo-credits:after { content: 'Morning Light: Good for Bottles, Bad for Windows by judy_and_ed, on Flickr, licenced under CC BY-NC 2.0'; }
+    .credits-3 .photo-credits:after { content: 'Magic bottle by kygp, on Flickr, licenced under CC BY-NC-ND 2.0'; }
     .credits-resources .photo-credits:after { content: 'Svuotiamo il frigobar e scappiamo, dai. by Francesca Guadagnini, on Flickr, licenced under CC BY-NC-SA 2.0'; }
     .credits-last .photo-credits:after { content: 'Kinaflex camera by La Belle Lumière, on Flickr, licenced under CC BY-NC-ND 2.0'; }
 
@@ -64,6 +65,7 @@
 
       <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
         <h1 class="main-title">2 oz. élixir</h1>
+        <h3 style="text-transform:none;">@FXGuillemette</h3>
       </section>
 
       <section data-background="#6e4a7e">
@@ -187,7 +189,7 @@ squared.(4) #=> 16.0
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h3>javascript</h3>
+        <h3>javascript + underscore</h3>
         <pre>
           <code class="javascript" data-trim>
 var squared = _.partial(Math.pow, _, 2);
@@ -733,10 +735,180 @@ iex(two@myhost)1> GenServer.call(:hello,
 
 
 
-      <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
-        <h1 class="main-title">troisième dose</h1>
-        <h2>Métaprogrammation ✪ Polymorphisme</h2>
+
+
+      <section data-background="lib/img/6478860425_2a98baf9b9_o.jpg" data-state="credits-3">
+        <h1 class="main-title">last call</h1>
+        <h2>Métaprogrammation</h2>
       </section>
+
+      <section data-background="#6e4a7e">
+        <blockquote>
+          &ldquo;The <span class="emph">first law</span> of metaprogramming is&hellip; you <span class="emph">do not use</span> metaprogramming&rdquo;
+        </blockquote>
+      </section>
+
+      <section data-background="lib/img/6478860425_2a98baf9b9_o.jpg" data-state="credits-3">
+        <h1 class="main-title">quote &amp; unquote</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>quote</h2>
+        <pre>
+          <code class="ruby" data-trim="">
+iex(1)> 1 + 2
+3
+
+iex(2)> quote do 1 + 2 end
+{:+, [...], [1, 2]}
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>unquote</h2>
+        <pre>
+          <code class="ruby" data-trim="">
+param = 2
+an_expr = quote do
+  1 + unquote(:math.pow(param, 2))
+end
+#=> {:+, [...], [1, 4.0]}
+          </code>
+          <code class="ruby" data-trim="">
+param = "world"
+a_string = "Hello, #{String.capitalize(param)}!"
+#=> "Hello, World!"
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/6478860425_2a98baf9b9_o.jpg" data-state="credits-3">
+        <h1 class="main-title">macros</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>JSONSchema</h2>
+        <pre>
+          <code class="javascript" data-trim="">
+{ id: 'name', type: 'string' }
+{ id: 'age', type: 'integer', minimum: '18' }
+{ id: 'contact', type: 'object',
+  properties: {
+    name: { '$ref': 'name' },
+    age: { '$ref': 'age' }
+  }
+}
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>JSONSchema avec pattern matching</h2>
+        <pre>
+          <code class="ruby" data-trim="">
+def valid?(:name, candidate)
+  when is_binary(candidate), do: true
+
+def valid?(:age, candidate)
+  when is_integer(candidate)
+    and candidate >= 18, do: true
+
+def valid?(:contact, %{"name"=>n, "age"=>a}) do
+  valid?(:name, n) and valid?(:age, a)
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Macros JSONSchema</h2>
+        <pre>
+          <code class="ruby" data-trim="">
+defmodule ContactSchema do
+  use JSONSchema
+
+  schema id: :name, type: :string
+  schema id: :age, type: :integer, minimum: 18
+  schema id: :contact, type: :object, properties:
+         %{"age" => :age, "name" => :name}
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule JSONSchema do
+  defmacro schema(opts) do
+    do_schema(opts[:type], opts)
+  end
+  def do_schema(:string, opts) do ... end
+  def do_schema(:integer, opts) do ... end
+  def do_schema(:object, opts) do ... end
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="ruby" data-trim="">
+def do_schema(:string, opts) do
+  quote do
+    def valid?(unquote(opts[:id]), candidate)
+      when is_binary(candidate), do: true
+  end
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="ruby" data-trim="">
+def do_schema(:object, opts) do
+  quote do
+    def valid?(unquote(opts[:id]), candidate) do
+      props = unquote(opts[:properties])
+      Enum.all? props, fn {prop_name, sch_id} ->
+        valid?(sch_id, candidate[prop_name])
+      end
+    end
+  end
+end
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="lib/img/6478860425_2a98baf9b9_o.jpg" data-state="credits-3">
+        <h1 class="main-title">&ldquo;using&rdquo;</h1>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="elixir" data-trim="">
+defmodule ContactSchema
+  use JSONSchema
+end
+          </code>
+          <code class="elixir" data-trim="">
+defmodule JSONSchema do
+  defmacro __using__(opts) do
+    quote do
+      import unquote(__MODULE__)
+    end
+  end
+end
+          </code>
+        </pre>
+      </section>
+
+
+
+
+
 
       <section data-background="lib/img/3377551632_62a7b16839_o.jpg", data-state="credits-resources">
         <h2>Ressources</h2>
@@ -753,6 +925,7 @@ iex(two@myhost)1> GenServer.call(:hello,
         <ul style="list-style:none; margin:0; text-align:center">
           <li><a href="https://flic.kr/p/o5ijLF">Message in a bottle by Peter Thoeny - Quality HDR Photography, on Flickr, licenced under CC BY-NC-SA 2.0</a><br></li>
           <li><a href="https://flic.kr/p/caVFY9">Morning Light: Good for Bottles, Bad for Windows by judy_and_ed, on Flickr, licenced under CC BY-NC 2.0</a><br></li>
+          <li><a href="https://flic.kr/p/aSvRu6">Magic bottle by kygp, on Flickr, licenced under CC BY-NC-ND 2.0</a></li>
           <li><a href="https://flic.kr/p/5YLxDr">Kinaflex camera by La Belle Lumière, on Flickr, licenced under CC BY-NC-ND 2.0</a><br></li>
           <li><a href="https://flic.kr/p/69sQqQ">Svuotiamo il frigobar e scappiamo, dai. by Francesca Guadagnini, on Flickr, licenced under CC BY-NC-ND 2.0</a></li>
         </ul>
