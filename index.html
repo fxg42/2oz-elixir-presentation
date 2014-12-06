@@ -753,6 +753,49 @@ iex(two@myhost)1> GenServer.call(:hello,
       </section>
 
       <section data-background="#6e4a7e">
+        <h2>Études de cas</h2>
+        <h3>gsp => html => js => regex => groovy</h3>
+        <pre>
+          <code class="nohighlight" data-trim="">
+&lt;html>
+  &lt;head>
+    &lt;script>
+      var re = /^&lt;%= someExpression() %>\$/;
+    &lt;/script>
+  &lt;/head>
+&lt;/html>
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>String templating</h2>
+        <pre>
+          <code class="coffeescript" data-trim="">
+param = "world"
+"Hello, #{param[0].toUpperCase() + param[1..-1]}!"
+#=> "Hello, World!"
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
+        <h2>Juste assez de lisp</h2>
+        <pre>
+          <code class="lisp" data-trim="">
+(+ 1 2) ;=> 3
+
+'(+ 1 2) ;=> (+ 1 2)
+
+`(+ 1 ,(+ 2 2)) ;=> (+ 1 4)
+
+(let ((param 2))
+  `(+ 1 ,(expt param 3))) ;=> (+ 1 8)
+          </code>
+        </pre>
+      </section>
+
+      <section data-background="#6e4a7e">
         <h2>quote</h2>
         <pre>
           <code class="ruby" data-trim="">
@@ -770,15 +813,12 @@ iex(2)> quote do 1 + 2 end
         <pre>
           <code class="ruby" data-trim="">
 param = 2
-an_expr = quote do
-  1 + unquote(:math.pow(param, 2))
+a_quoted_expr = quote do
+  1 + unquote(:math.pow(param, 3))
 end
-#=> {:+, [...], [1, 4.0]}
-          </code>
-          <code class="ruby" data-trim="">
-param = "world"
-a_string = "Hello, #{String.capitalize(param)}!"
-#=> "Hello, World!"
+#=> {:+, [...], [1, 8.0]}
+Macro.to_string(a_quoted_expr)
+#=> "1 + 8.0"
           </code>
         </pre>
       </section>
@@ -968,6 +1008,8 @@ end
         { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/elixir.min.js', async: true },
         { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/coffeescript.min.js', async: true },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/javascript.min.js', async: true },
+        { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/lisp.min.js', async: true },
         { src: 'http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/languages/bash.min.js', async: true },
         { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
         { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
