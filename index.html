@@ -847,15 +847,10 @@ Macro.to_string(a_quoted_expr)
         <h2>JSONSchema avec pattern matching</h2>
         <pre>
           <code class="ruby" data-trim="">
-def valid?(:name, candidate)
-  when is_binary(candidate), do: true
-          </code>
-          <code class="ruby" data-trim="">
 def valid?(:age, candidate)
   when is_integer(candidate)
     and candidate >= 18, do: true
-          </code>
-          <code class="ruby" data-trim="">
+
 def valid?(:contact, %{"name"=>n, "age"=>a}) do
   valid?(:name, n) and valid?(:age, a)
 end
