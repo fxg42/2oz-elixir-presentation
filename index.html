@@ -176,7 +176,7 @@ end
         <h3>javascript</h3>
         <pre>
           <code class="javascript" data-trim>
-var squared = function(x){return Math.pow(x, 2);};
+var squared = (x) => Math.pow(x, 2);
 squared(4); //=> 16
           </code>
         </pre>
@@ -744,7 +744,7 @@ iex(two@myhost)1> GenServer.call(:hello,
 
       <section data-background="#6e4a7e">
         <blockquote>
-          &ldquo;The <span class="emph">first law</span> of metaprogramming is&hellip; you <span class="emph">do not use</span> metaprogramming&rdquo;
+          &ldquo;The <span class="emph">first law</span> of metaprogramming is: you <span class="emph">do not use</span> metaprogramming when plainprogramming will suffice.&rdquo;
         </blockquote>
       </section>
 
@@ -849,11 +849,13 @@ Macro.to_string(a_quoted_expr)
           <code class="ruby" data-trim="">
 def valid?(:name, candidate)
   when is_binary(candidate), do: true
-
+          </code>
+          <code class="ruby" data-trim="">
 def valid?(:age, candidate)
   when is_integer(candidate)
     and candidate >= 18, do: true
-
+          </code>
+          <code class="ruby" data-trim="">
 def valid?(:contact, %{"name"=>n, "age"=>a}) do
   valid?(:name, n) and valid?(:age, a)
 end
