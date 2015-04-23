@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
 
-  <title>2 oz elixir</title>
+  <title>2 oz élixir</title>
 
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -64,32 +64,32 @@
     <div class="slides">
 
       <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
-        <h1 class="main-title">2 oz. elixir</h1>
-        <h3 style="text-transform:none;">@fxguillemette</h3>
+        <h1 class="main-title">2 oz. élixir</h1>
+        <h3 style="text-transform:none;">@FXGuillemette</h3>
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>Why elixir?</h2>
+        <h2>pourquoi élixir?</h2>
         <table>
           <tr>
             <td>
               <ul>
-                <li class="fragment">functional programming</li>
-                <li class="fragment">transparent concurrency</li>
-                <li class="fragment">metaprogramming</li>
-                <li class="fragment">dynamic and structural typing</li>
-                <li class="fragment">polymorphism</li>
+                <li class="fragment">programmation fonctionnelle</li>
+                <li class="fragment">concurrence transparente</li>
+                <li class="fragment">métaprogrammation</li>
+                <li class="fragment">typage dynamique et structurel</li>
+                <li class="fragment">polymorphisme</li>
                 <li class="fragment">comprehensions</li>
               </ul>
             </td>
             <td>
               <ul>
                 <li class="fragment">tail-call optimization</li>
-                <li class="fragment">immuability</li>
+                <li class="fragment">immuabilité</li>
                 <li class="fragment">pattern matching</li>
-                <li class="fragment">distributed and asynchronous processes</li>
-                <li class="fragment">robust platform (OTP)</li>
-                <li class="fragment">process supervisors</li>
+                <li class="fragment">services distribués et asynchrones</li>
+                <li class="fragment">plateforme robuste (OTP)</li>
+                <li class="fragment">surveillance de processus</li>
                 <li class="fragment">etc&hellip;</li>
               </ul>
             </td>
@@ -142,7 +142,7 @@ end
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>Factorial</h2>
+        <h2>Factoriel d'un nombre</h2>
         <pre>
           <code class="ruby" data-trim>
 defmodule Factorial do
@@ -156,7 +156,7 @@ end
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>Summing a list</h2>
+        <h2>Somme des éléments d'une liste</h2>
         <pre>
           <code class="ruby" data-trim>
 defmodule Sum do
@@ -170,10 +170,10 @@ end
       </section>
 
       <section data-background="lib/img/14488494927_424fd13de4_o.jpg" data-state="credits-1">
-        <h1 class="main-title">Anonymous functions</h1>
+        <h1 class="main-title">Fonctions anonymes</h1>
       </section>
       <section data-background="#6e4a7e">
-        <h3>ES6</h3>
+        <h3>javascript</h3>
         <pre>
           <code class="javascript" data-trim>
 const squared = (x) => Math.pow(x, 2);
@@ -189,7 +189,7 @@ squared.(4) #=> 16.0
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h3>ES6 + underscore</h3>
+        <h3>javascript + underscore</h3>
         <pre>
           <code class="javascript" data-trim>
 const squared = _.partial(Math.pow, _, 2);
@@ -205,7 +205,7 @@ squared.(4) #=> 16.0
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h3>ES6</h3>
+        <h3>javascript</h3>
         <pre>
           <code class="javascript" data-trim>
 const pow = Math.pow;
@@ -227,7 +227,7 @@ pow.(4, 2) #=> 16.0
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>Happy numbers</h2>
+        <h2>Nombres &lsquo;heureux&rsquo;</h2>
         <p>
         $$
         19 \rightarrow 1^2 + 9^2 = 82 \\
@@ -304,7 +304,7 @@ iex> for x <- 1..5, y <- 1..5, x < y, do: {x,y}
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>Prime numbers</h2>
+        <h2>Nombres premiers</h2>
         <pre>
           <code class="small elixir" data-trim>
 defmodule PrimeNumbers do
@@ -322,14 +322,14 @@ defmodule PrimeNumbers do
       </section>
 
       <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
-        <h1 class="main-title">Just one more&hellip;</h1>
-        <h2>Distributed programming</h2>
+        <h1 class="main-title">deuxième dose</h1>
+        <h2>Programmation distribuée</h2>
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>Distributed programming</h2>
+        <h2>Programmation distribuée</h2>
         <ul>
-          <li class="fragment">Actors</li>
+          <li class="fragment">Acteurs</li>
           <li class="fragment">GenServers</li>
           <li class="fragment">GenEvents</li>
           <li class="fragment">Tasks</li>
@@ -340,7 +340,7 @@ defmodule PrimeNumbers do
       </section>
 
       <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
-        <h1 class="main-title">Actors</h1>
+        <h1 class="main-title">Acteurs</h1>
       </section>
 
       <section data-background="#6e4a7e">
@@ -351,7 +351,7 @@ defmodule PrimeNumbers do
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>A primitive actor</h2>
+        <h2>un acteur primitif</h2>
         <pre>
           <code class="elixir" data-trim="">
 defmodule Greeter do
@@ -367,7 +367,7 @@ end
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>calling an actor</h2>
+        <h2>Appeler un acteur</h2>
         <pre>
           <code class="elixir" data-trim="">
 pid = spawn(Greeter, :start, [])
@@ -402,7 +402,7 @@ end
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>a genserver</h2>
+        <h2>un genserver</h2>
         <pre>
           <code class="small elixir" data-trim="">
 defmodule Greeter do
@@ -419,7 +419,7 @@ end
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>calling a genserver</h2>
+        <h2>appeler un genserver</h2>
         <pre>
           <code class="small elixir" data-trim="">
 {:ok, pid} = GenServer.start_link(Greeter, "Hello")
@@ -428,7 +428,7 @@ GenServer.call(pid, {:greet, "World"}) #=> "Hello, World!"
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>client API</h2>
+        <h2>API client</h2>
         <pre>
           <code class="small elixir" data-trim="">
 defmodule Greeter do
@@ -452,7 +452,7 @@ defmodule Greeter do
 
       <section data-background="#6e4a7e">
         <blockquote>
-          &ldquo;A GenEvent <span class="emph">handler</span> is a process that subscribes to <span class="emph">events</span> emitted by a GenEvent <span class="emph">manager</span>.&rdquo;
+          &ldquo;Un GenEvent <span class="emph">handler</span> est un processus qui souscrit à des <span class="emph">événements</span> émis par un GenEvent <span class="emph">manager</span>.&rdquo;
         </blockquote>
       </section>
 
@@ -499,7 +499,7 @@ GenEvent.notify(pid, {:new_entry, %{id: 1}})
         <p class="blockquote-reference">Programming Elixir</p>
       </section>
       <section data-background="#6e4a7e">
-        <h2>starting a task</h2>
+        <h2>déclencher une tâche</h2>
         <pre>
           <code class="elixir" data-trim="">
 worker = Task.async(Mod, :expensive_call, [])
@@ -509,7 +509,7 @@ result = Task.await(worker)
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>10,000 parallel tasks</h2>
+        <h2>10,000 tâches parallèles</h2>
         <pre>
           <code class="small elixir" data-trim="">
 (for i <- 1..10_000, into: [], do: i)
@@ -602,7 +602,7 @@ end
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>named supervisor</h2>
+        <h2>superviseur nommé</h2>
         <pre>
           <code class="elixir" data-trim="">
 defmodule GreeterSupervisor do
@@ -616,7 +616,7 @@ defmodule GreeterSupervisor do
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>supervising another process</h2>
+        <h2>Ajout de processus à superviser</h2>
         <pre>
           <code class="elixir" data-trim="">
 defmodule GreeterSupervisor do
@@ -635,26 +635,26 @@ end
         <table>
           <thead>
             <tr>
-              <th>Strategy</th>
+              <th>Stratégie</th>
               <th>Description</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><pre>:one_for_one</pre></td>
-              <td style="font-size:0.6em">When a process crashes, restart it.</td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, le redémarrer.</td>
             </tr>
             <tr>
               <td><pre>:one_for_all</pre></td>
-              <td style="font-size:0.6em">When one process crashes, restart all of them.</td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, les redémarrer tous.</td>
             </tr>
             <tr>
               <td><pre>:rest_for_all</pre></td>
-              <td style="font-size:0.6em">When one crashes, restart it and all others that depend on it.</td>
+              <td style="font-size:0.6em">Lorsqu'un processus meurt, le redémarrer lui, et tous les autres qui suivent.</td>
             </tr>
             <tr>
               <td><pre>:simple_one_for_one</pre></td>
-              <td style="font-size:0.6em">Like :one_for_one but only when dynamically adding children.</td>
+              <td style="font-size:0.6em">Comme :one_for_one mais spécifiquement pour l'ajout dynamique d'enfants.</td>
             </tr>
           </tbody>
         </table>
@@ -672,7 +672,7 @@ end
         <p class="blockquote-reference">Programming Elixir</p>
       </section>
       <section data-background="#6e4a7e">
-        <h2>Started in the first node&hellip;</h2>
+        <h2>Démarré dans le 1er node...</h2>
         <pre>
           <code class="bash" data-trim="">
 $ iex --sname one greeter.exs
@@ -686,7 +686,7 @@ iex(one@myhost)1> GenServer.start_link(
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>&hellip;Called from the second.</h2>
+        <h2>...Appelé du 2d.</h2>
         <pre>
           <code class="bash" data-trim="">
 $ iex --sname two
@@ -704,7 +704,7 @@ iex(two@myhost)3> GenServer.call(
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>Started in the second from the first&hellip;</h2>
+        <h2>Démarré dans le 2d, à partir du 1er...</h2>
         <pre>
           <code class="bash" data-trim="">
 $ iex --sname one
@@ -719,7 +719,7 @@ iex(one@myhost)2> Node.spawn(:"two@myhost",
         </pre>
       </section>
       <section data-background="#6e4a7e">
-        <h2>&hellip;Called locally in the second.</h2>
+        <h2>...Appelé localement dans le 2d.</h2>
         <pre>
           <code class="bash" data-trim="">
 $ iex --sname two greeter.exs
@@ -739,7 +739,7 @@ iex(two@myhost)1> GenServer.call(:hello,
 
       <section data-background="lib/img/6478860425_2a98baf9b9_o.jpg" data-state="credits-3">
         <h1 class="main-title">last call</h1>
-        <h2>Metaprogramming</h2>
+        <h2>Métaprogrammation</h2>
       </section>
 
       <section data-background="#6e4a7e">
@@ -753,8 +753,8 @@ iex(two@myhost)1> GenServer.call(:hello,
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>Case study</h2>
-        <h3>gsp(html(js(regex(groovy))))</h3>
+        <h2>Études de cas</h2>
+        <h3>gsp => html => js => regex => groovy</h3>
         <pre>
           <code class="nohighlight" data-trim="">
 &lt;html>
@@ -780,7 +780,7 @@ param = "world"
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>Just enough Lisp</h2>
+        <h2>Juste assez de lisp</h2>
         <pre>
           <code class="lisp" data-trim="">
 (+ 1 2) ;=> 3
@@ -844,7 +844,7 @@ Macro.to_string(a_quoted_expr)
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>JSONSchema with pattern matching</h2>
+        <h2>JSONSchema avec pattern matching</h2>
         <pre>
           <code class="ruby" data-trim="">
 def valid?(:age, candidate)
@@ -859,7 +859,7 @@ end
       </section>
 
       <section data-background="#6e4a7e">
-        <h2>JSONSchema macros</h2>
+        <h2>Macros JSONSchema</h2>
         <pre>
           <code class="ruby" data-trim="">
 defmodule ContactSchema do
@@ -948,7 +948,7 @@ end
 
 
       <section data-background="lib/img/3377551632_62a7b16839_o.jpg", data-state="credits-resources">
-        <h2>Resources</h2>
+        <h2>Ressources</h2>
         <ul style="list-style:none; margin:0; text-align:center">
           <li><a href="https://pragprog.com/book/elixir/programming-elixir">Programming Elixir</a></li>
           <li><a href="http://elixir-lang.org/getting_started/1.html">Elixir &ldquo;Getting Started&rdquo; guide</a></li>
