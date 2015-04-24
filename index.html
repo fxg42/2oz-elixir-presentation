@@ -320,6 +320,18 @@ defmodule PrimeNumbers do
           </code>
         </pre>
       </section>
+      <section data-background="#6e4a7e">
+        <pre>
+          <code class="small elixir" data-trim>
+defp multiples_of(_, curr, limit, acc)
+  when curr > limit, do: acc
+
+defp multiples_of(multiple, curr, limit, acc) do
+  multiples_of(multiple, curr+multiple, limit, [curr|acc])
+end
+          </code>
+        </pre>
+      </section>
 
       <section data-background="lib/img/7332248300_7118e9e700_o.jpg" data-state="credits-2">
         <h1 class="main-title">Just one more&hellip;</h1>
